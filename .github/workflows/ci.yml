@@ -1,0 +1,34 @@
+# Installation check: does "uv sync + uv run pytest" work on all three systems
+# the students use? Also executes the student notebooks (TODOs may fail, nothing else).
+name: Install check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install-check:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          enable-cache: true
+      - name: uv sync (exactly as in the README)
+        run: uv sync --locked
+      - name: uv run pytest (exactly as in the README)
+        run: uv run pytest
+      - name: Execute the student notebooks
+        env:
+          DDM_RUN_NOTEBOOK_TESTS: "1"
+        run: uv run pytest tests/test_notebooks.py -v
