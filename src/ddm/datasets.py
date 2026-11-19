@@ -52,7 +52,7 @@ DATASETS: dict[str, DatasetInfo] = {
         pitfalls=(
             "Measurements in mm and g live on very different scales.",
             "A few rows have missing measurements; 'sex' has more gaps.",
-            "'species' is the answer key: leave it out of the features.",
+            "'species' holds the known groups: leave it out of the features.",
         ),
     ),
     "wholesale": DatasetInfo(

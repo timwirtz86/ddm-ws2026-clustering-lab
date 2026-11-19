@@ -7,8 +7,8 @@ Hands-on material for *Data Driven Modelling*, Lecture 1: **standard clustering 
 
 In this lab we cluster a real dataset step by step and write the important parts ourselves:
 preprocessing, distance measures (including the Gower distance for mixed attribute types),
-agglomerative clustering and k-medoids. Then we evaluate the results, try DBSCAN and spectral
-clustering, and explain the clusters with a small decision tree.
+agglomerative clustering and k-medoids. Then we evaluate the results and try DBSCAN. At the
+start of the next lecture we explain the clusters with a small decision tree.
 
 Everything that is *plumbing* (loading the data, saving intermediate results, plotting) is done
 by the small helper library `ddm` in `src/ddm/`. Everything that is a *learning goal* is a TODO
@@ -172,9 +172,9 @@ prints a `NOTICE` and continues with a simple baseline, so we never get stuck.
 | Notebook | Block | Time | What we do |
 |----------|-------|------|------------|
 | `01_dataset.ipynb` | B1 | 10 min | choose a dataset, write our question, classify every attribute |
-| `02_distance.ipynb` | B4 | 20 min | `preprocess`, Minkowski and cosine distance, **Gower distance** |
-| `03_clustering.ipynb` | B6 | 20 min | **agglomerative clustering**, **k-medoids** (optional: k-means with our distance) |
-| `04_beyond.ipynb` | B7–B9 | 40 min | silhouette, ARI, elbow; DBSCAN, spectral clustering; cluster profiles and a surrogate tree |
+| `02_distance.ipynb` | B4 | 25 min | `preprocess`, Minkowski and cosine distance, **Gower distance** |
+| `03_clustering.ipynb` | B6 | 25 min | **agglomerative clustering**, **k-medoids** (optional: k-means with our distance) |
+| `04_beyond.ipynb` | B7–B8 | 20 min | silhouette, ARI, elbow; DBSCAN. Part 3 (cluster profiles and a surrogate tree) is for next week, start of Lecture 2 |
 | `05_homework.ipynb` | B10 | homework | full analysis of our dataset, incl. "structure or artefact?" |
 
 Every TODO function has a check cell below it that prints one line per test:
@@ -189,7 +189,7 @@ Every group works on one dataset. Set it in the first code cell of every noteboo
 DATASET = "penguins"  # or "wholesale", "auto_mpg", "students"
 ```
 
-| Name | Objects × attributes | Why it is interesting | Label candidates (answer key) |
+| Name | Objects × attributes | Why it is interesting | Label candidates (known groups) |
 |------|----------------------|-----------------------|-------------------------------|
 | `penguins` | 344 × 8 | measurements on very different scales, missing values, few categories | species, sex |
 | `wholesale` | 440 × 8 | spending is extremely skewed (log transform), integer codes that are nominal | channel, region |
@@ -208,7 +208,8 @@ Allowed, if it meets the same criteria as the course datasets:
 2. **Mixed attribute types:** at least two different types (e.g. numeric and nominal), so that
    preprocessing and the choice of distance actually matter.
 3. **Transformation needed:** different scales, skewed values or missing values.
-4. **Answer key:** at least one column we can leave out and compare the clusters with later.
+4. **Known groups:** at least one column with known group labels that we leave out of the
+   clustering and only use afterwards to compare the clusters with.
 5. **Open licence** that allows use in teaching (e.g. CC0, CC BY), and no personal data.
 
 How: put the raw file into `data/raw/`, and add an entry to `DATASETS` plus a branch in
